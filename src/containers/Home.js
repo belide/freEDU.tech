@@ -14,17 +14,17 @@ class Home extends React.Component {
       <div>
         <Header />
         <div style={{ ...f1, ...row, flexWrap: 'wrap', justifyContent: 'center', paddingTop: '1rem' }}>
-          {Object.keys(routes).map((category, i) => {
+          {Object.keys(routes.sub).map((category, i) => {
             return (
               <Link
                 key={i}
-                to={routes[category].route}
+                to={routes.sub[category].route}
                 >
                 <div
                   className="category"
-                  style={{ ...b, ...xy, margin: '1rem', borderColor: color.r, backgroundImage: `url(${routes[category].image})`, height: '19rem', width: '34rem' }}
+                  style={{ ...b, ...xy, margin: '1rem', borderColor: color.r, backgroundImage: `url(${routes.sub[category].image})`, height: '19rem', width: '34rem' }}
                   >
-                  <h1>{routes[category].name}</h1>
+                  <h1>{routes.sub[category].name}</h1>
                 </div>
               </Link>
             );

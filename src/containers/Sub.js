@@ -7,7 +7,7 @@ import { color, xy, row, b, f1, routes, font } from '../helper';
 import './index.css';
 import Header from './Header';
 
-class Sub extends React.Component {
+class Sub extends React.PureComponent {
   state = {
     subsVisible: false,
     mode: 'posts',
@@ -27,6 +27,8 @@ class Sub extends React.Component {
   }
 
   render() {
+
+    console.log('render')
     let { mode, details, title, question, link } = this.state;
     let { state, location } = this.props;
     let { user, suggestions, search, routeInfo } = state;
@@ -45,7 +47,6 @@ class Sub extends React.Component {
     //     </div>
     //   </div>
     // ) : null;
-
     return (
       <div style={f1}>
         <Header />
@@ -141,7 +142,7 @@ class Sub extends React.Component {
     if (mode === 'posts') {
       return (
         <div style={{ alignSelf: 'center' }}>
-          {Object.keys(this.state[mode]).map(key => {
+          {Object.keys(this.state[mode]).reverse().map(key => {
             return (
               <div key={key} style={{ ...row, ...xy, justifyContent: 'flex-start' }}>
                 <div
@@ -167,7 +168,7 @@ class Sub extends React.Component {
 
     return (
       <div style={{ alignSelf: 'center' }}>
-        {Object.keys(this.state[mode]).map(key => {
+        {Object.keys(this.state[mode]).reverse().map(key => {
           return (
             <div key={key} style={{ ...row, alignItems: 'flex-end', justifyContent: 'flex-start' }}>
               <div
@@ -193,13 +194,15 @@ class Sub extends React.Component {
   }
 
   getImageFromPath = arr => {
+    console.log('ARR', arr)
     if (!arr.length) {
       return null;
     }
 
     let location = routes;
     for (let i = 0; i < arr.length; i++) {
-      location = location[arr[i]]
+      location = location.sub[arr[i]]
+      console.log('LOCATION!', location)
       if (!location) {
         return window.location.replace('/404')
       }
