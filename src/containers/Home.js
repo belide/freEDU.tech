@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setState } from '../state';
-import { colors } from '../helper';
+import { color } from '../helper';
 import Header from './Header';
 
 class Home extends React.Component {
