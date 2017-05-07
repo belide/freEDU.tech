@@ -1,8 +1,9 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 import { setState } from '../state';
-import { color, xy, row, b } from '../helper';
+import { color, xy, row, b, f1 } from '../helper';
 import './index.css';
 
 let web = [
@@ -11,13 +12,45 @@ let web = [
     route: '/web'
   },
   {
-    name: 'React',
-    route: '/web/React'
+    name: 'Front End',
+    route: '/web/frontend'
   },
   {
-    name: 'Algorithms',
-    route: '/algorithms'
+    name: 'React',
+    route: '/web/frontend/react'
   },
+  {
+    name: 'Angular',
+    route: '/web/frontend/angular'
+  },
+  {
+    name: 'Polymer',
+    route: '/web/frontend/polymer'
+  },
+  {
+    name: 'Games',
+    route: '/web/games'
+  },
+  {
+    name: 'Phaser',
+    route: '/web/games/phaser'
+  },
+  {
+    name: 'Unity Web',
+    route: '/web/games/unity'
+  },
+  {
+    name: 'Back End',
+    route: '/web/backend'
+  },
+  {
+    name: 'Node',
+    route: '/web/backend/node'
+  },
+  {
+    name: 'Express',
+    route: '/web/backend/node/express'
+  }
 ];
 
 let languages = [
@@ -27,7 +60,7 @@ let languages = [
   },
   {
     name: 'JavaScript',
-    route: '/languages/algorithms'
+    route: '/languages/javascript'
   },
   {
     name: 'C',
@@ -39,9 +72,69 @@ let languages = [
   }
 ];
 
+let databases = [
+  {
+    name: 'Databases',
+    route: '/databases'
+  },
+  {
+    name: 'SQL',
+    route: '/sql'
+  },
+  {
+    name: 'NoSQL',
+    route: '/nosql'
+  },
+  {
+    name: 'MongoDB',
+    route: '/nosql/mongodb'
+  },
+  {
+    name: 'DynamoDB',
+    route: '/nosql/dynamodb'
+  },
+];
+
+let algorithms = [
+  {
+    name: 'Algorithms',
+    route: '/algorithms'
+  },
+  {
+    name: 'Trees',
+    route: '/algorithms/trees'
+  },
+  {
+    name: 'Sorting',
+    route: '/algorithms/sorting'
+  },
+  {
+    name: 'Bubble Sort',
+    route: '/algorithms/sorting/bubble'
+  },
+  {
+    name: 'Bucket Sort',
+    route: '/algorithms/sorting/bucket'
+  },
+  {
+    name: 'Insertion Sort',
+    route: '/algorithms/sorting/insertion'
+  },
+  {
+    name: 'MergeSort',
+    route: '/algorithms/sorting/merge'
+  },
+  {
+    name: 'Heapsort',
+    route: '/algorithms/sorting/heap'
+  },
+];
+
 let categories = [
   ...web,
   ...languages,
+  ...algorithms,
+  ...databases,
   {
     name: 'Artificial Intelligence',
     route: '/ai'
@@ -49,10 +142,6 @@ let categories = [
   {
     name: 'Robotics',
     route: '/robotics'
-  },
-  {
-    name: 'Algorithms',
-    route: '/algorithms'
   }
 ];
 
@@ -66,53 +155,50 @@ const getSuggestions = value => {
 };
 
 class Header extends React.Component {
-  state = {
-    suggestions: [],
-    value: ''
-  }
-
   render() {
     let { state } = this.props;
-    let { user } = state;
+    let { user, suggestions, search } = state;
 
     let inputProps = {
-      value: this.state.value,
+      value: search,
       placeholder: 'Search',
       onChange: this.onChange,
       onBlur: this.onBlur
     };
 
     return (
-      <div style={{ ...row, height: '4rem', borderBottom: '1px solid black' }}>
-        <div style={{ ...row, alignItems: 'center', flex: 2 }}>
-          <img
-            src={require('../assets/logo.png')}
-            style={{ width: '8rem', margin: '1rem' }}
-          />
-          <Autosuggest
-            suggestions={this.state.suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={v => v.name}
-            getSuggestions={getSuggestions}
-            renderSuggestion={this.renderSuggestion}
-            inputProps={inputProps}
-          />
-        </div>
+      <div style={{ ...row, backgroundColor: color.q, height: '4rem', borderBottom: `1px solid ${color.q}`, padding: '0 3rem' }}>
+        <Link to="/">
+          <div style={{ ...row, alignItems: 'center', flex: 2 }}>
+            <img
+              src={require('../assets/lightLogo.png')}
+              style={{ width: '8rem' }}
+            />
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              getSuggestionValue={v => v.name}
+              getSuggestions={getSuggestions}
+              renderSuggestion={this.renderSuggestion}
+              inputProps={inputProps}
+            />
+          </div>
+        </Link>
         <div style={{ ...xy, flex: 1, alignItems: 'flex-end' }}>
-          <p style={{ fontSize: '1.6rem', margin: '1rem' }}>{user ? user.name : 'login'}</p>
+          <p style={{ fontSize: '1.6rem', color: 'white' }}>{user ? user.name : 'login'}</p>
         </div>
       </div>
     );
   }
 
   onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
+    this.props.setState({
+      search: newValue
     });
   };
 
-  onBlur = () => this.setState({ value: '' })
+  onBlur = () => this.props.setState({ search: '' })
 
   renderSuggestion = v => (
     <div>
@@ -121,13 +207,13 @@ class Header extends React.Component {
   );
 
   onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
+    this.props.setState({
       suggestions: getSuggestions(value)
     });
   }
 
   onSuggestionsClearRequested = () => {
-    this.setState({
+    this.props.setState({
       suggestions: []
     });
   };

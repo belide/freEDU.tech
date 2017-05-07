@@ -1,13 +1,16 @@
 body {
   margin: 0;
+  background-color: #CEE5F2;
 }
 
 body * {
   display: flex;
   flex-direction: column;
   margin: 0;
+  text-decoration: none;
 }
 
-p {
+p, h1 {
   font-family: sans-serif;
+  font-weight: 300;
 }

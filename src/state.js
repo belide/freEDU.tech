@@ -3,7 +3,8 @@ import { createStore } from 'redux';
 const SET_STATE = 'SET_STATE';
 
 const defaultState = {
-
+  suggestions: [],
+  search: ''
 };
 
 const setState = function(state) {
