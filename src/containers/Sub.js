@@ -227,9 +227,7 @@ class Sub extends React.PureComponent {
               ) : null}
               <div
                 onClick={() => {
-                  // if (!this.state.activeAnswerId) {
                   this.setState({ activeAnswerId: key });
-                  // }
                   if (this.state.answer.length > 0) {
                     if (filter.isSpam(this.state.answer)) {
                       return this.setState({ answer: 'TROLOLOLLING DETECTED!!!' });
