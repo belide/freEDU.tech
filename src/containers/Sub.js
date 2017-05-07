@@ -108,6 +108,10 @@ class Sub extends React.PureComponent {
               <Link
                 key={i}
                 to={routeInfo.sub[category].route}
+                onClick={() => {
+                  console.log('routeInfo.sub[category].route')
+                  this.getImageFromPath(routeInfo.sub[category].route.split('/').filter(val => val != ''));
+                }}
                 className="sub category"
                 style={{ ...xy, height: '15rem', width: '20rem', margin: '3rem', backgroundImage: `url(${routeInfo.sub[category].image})` }}
                 >

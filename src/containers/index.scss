@@ -7,13 +7,16 @@
   border-radius: 4px;
   transition: background-color 0.2s;
 
+  & * {
+    user-select: none;
+  }
+
   img {
     transition: filter 0.2s;
   }
 
   p {
     transition: color 0.2s;
-    user-select: none;
   }
 
   &:hover {

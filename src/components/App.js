@@ -17,7 +17,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/404" component={Lost}></Route>
             <Route exact path="/" component={Home}></Route>
-            <Route path="/*" component={Sub}></Route>
+            <Route exact path="/*" component={Sub}></Route>
           </Switch>
         </BrowserRouter>
       </Provider>
