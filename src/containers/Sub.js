@@ -125,14 +125,49 @@ class Sub extends React.Component {
   }
 
   renderPosts = mode => {
+    if (mode === 'posts') {
+      return (
+        <div style={{ alignSelf: 'center' }}>
+          {Object.keys(this.state[mode]).map(key => {
+            return (
+              <div key={key} style={{ ...row, ...xy, justifyContent: 'flex-start' }}>
+                <div style={{ ...xy, ...row, height: '3rem', width: '5rem', backgroundColor: 'white', margin: '1rem' }}>
+                  <img
+                    style={{ height: '14px', width: '14px', marginRight: '5px' }}
+                    src={require('../assets/triangle.png')}
+                  />
+                  <p style={font.r}>{this.state[mode][key].votes}</p>
+                </div>
+                <a target="_blank" href={this.state[mode][key].link}>
+                  <p style={{ ...font.e, color: color.q }}>{this.state[mode][key].title}</p>
+                </a>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
     return (
-      Object.keys(this.state[mode]).map(key => {
-        return (
-          <div key={key}>
-            <p>{this.state[mode][key][mode === 'posts' ? 'title' : 'question']}</p>
-          </div>
-        );
-      })
+      <div style={{ alignSelf: 'center' }}>
+        {Object.keys(this.state[mode]).map(key => {
+          return (
+            <div key={key} style={{ ...row, alignItems: 'flex-end', justifyContent: 'flex-start' }}>
+              <div style={{ ...xy, ...row, height: '3rem', width: '5rem', backgroundColor: 'white', margin: '1rem' }}>
+                <img
+                  style={{ height: '14px', width: '14px', marginRight: '5px' }}
+                  src={require('../assets/triangle.png')}
+                />
+                <p style={font.r}>{this.state[mode][key].votes}</p>
+              </div>
+              <div style={{ maxWidth: '90vw' }}>
+                <p style={{ ...font.e, color: color.q }}>{this.state[mode][key].question}</p>
+                <p style={{ ...font.t, color: color.q }}>{this.state[mode][key].details || ''}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     );
   }
 
