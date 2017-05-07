@@ -162,7 +162,7 @@ class Sub extends React.PureComponent {
     if (mode === 'posts') {
       return (
         <div style={{ alignSelf: 'center' }}>
-          {Object.keys(this.state[mode]).reverse().map(key => {
+          {Object.keys(this.state[mode]).sort((a, b) => this.state[mode][b].votes - this.state[mode][a].votes).map(key => {
             return (
               <div key={key} style={{ ...row, ...xy, justifyContent: 'flex-start' }}>
                 <div
@@ -187,7 +187,7 @@ class Sub extends React.PureComponent {
     }
     return (
       <div style={{ alignSelf: 'center' }}>
-        {Object.keys(this.state[mode]).reverse().map(key => {
+        {Object.keys(this.state[mode]).sort((a, b) => this.state[mode][b].votes - this.state[mode][a].votes).map(key => {
           return (
             <div key={key}>
               <div style={{ ...row, alignItems: 'center', justifyContent: 'flex-start', width: '60vw' }}>
