@@ -203,7 +203,7 @@ class Sub extends React.PureComponent {
               </div>
               {Object.keys(this.state[mode][key].answers || {}).map((answerID, i) => {
                 return (
-                  <div key={i} style={{}}>
+                  <div key={i} style={{ width: '50vw' }}>
                     <p style={{ ...font.r, marginLeft: '7rem' }}>&#8226; {this.state[mode][key].answers[answerID]}</p>
                   </div>
                 );

@@ -3,7 +3,7 @@ import Autosuggest from 'react-autosuggest';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { setState } from '../state';
-import { color, xy, row, b, f1 } from '../helper';
+import { color, xy, row, b, f1, font } from '../helper';
 import './index.css';
 
 let web = [
@@ -206,7 +206,7 @@ class Header extends React.Component {
 
   renderSuggestion = v => (
     <Link to={v.route}>
-      {v.name}
+      <p style={{ ...font.e, color: color.q }}>{v.name}</p>
     </Link>
   );
 
