@@ -1,4 +1,5 @@
 import React from 'react';
+import SimpleSpamFilter from 'simple-spam-filter';
 import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
@@ -6,6 +7,14 @@ import { setState } from '../state';
 import { color, xy, row, b, f1, routes, font } from '../helper';
 import './index.css';
 import Header from './Header';
+
+var opts = {
+    minWords: 5,
+    maxPercentCaps: 30,
+    maxNumSwearWords: 2
+}
+
+var filter = new SimpleSpamFilter(opts)
 
 class Sub extends React.PureComponent {
   state = {
@@ -222,6 +231,9 @@ class Sub extends React.PureComponent {
                     return this.setState({ activeAnswerId: key });
                   }
                   if (this.state.answer.length > 0) {
+                    if (filter.isSpam(this.state.answer)) {
+                      return console.log('troll detected!');
+                    }
                     this.root.child(`${mode}/${key}/answers`).push(this.state.answer);
                     this.setState({ answer: '', activeAnswerId: null });
                   }
