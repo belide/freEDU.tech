@@ -206,7 +206,9 @@ class Header extends React.Component {
 
   renderSuggestion = v => (
     <Link to={v.route}>
-      <p style={{ ...font.e, color: color.q }}>{v.name}</p>
+      <div style={{ justifyContent: 'center', height: '3rem' }}>
+        <p style={{ ...font.e, color: color.q }}>{v.name}</p>
+      </div>
     </Link>
   );
 
