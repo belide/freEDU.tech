@@ -94,7 +94,7 @@ class Sub extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.location.pathname.length > this.props.location.pathname.length) {
+    if (prevProps.location.pathname.length !== this.props.location.pathname.length) {
       console.log('back!')
       this.getImageFromPath(this.props.location.pathname.split('/').filter(val => val != ''));
     }
