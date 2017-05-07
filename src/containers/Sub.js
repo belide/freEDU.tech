@@ -145,7 +145,7 @@ class Sub extends React.Component {
             return (
               <div key={key} style={{ ...row, ...xy, justifyContent: 'flex-start' }}>
                 <div
-                  onClick={() => {}}
+                  onClick={() => this.root.child(mode).update({ [key]: { ...this.state[mode][key], votes: this.state[mode][key].votes + 1 } })}
                   className="upvote"
                   style={{ ...xy, ...row }}
                   >
@@ -171,7 +171,7 @@ class Sub extends React.Component {
           return (
             <div key={key} style={{ ...row, alignItems: 'flex-end', justifyContent: 'flex-start' }}>
               <div
-                onClick={() => {}}
+                onClick={() => this.root.child(mode).update({ [key]: { ...this.state[mode][key], votes: this.state[mode][key].votes + 1 } })}
                 className="upvote"
                 style={{ ...xy, ...row }}
                 >
