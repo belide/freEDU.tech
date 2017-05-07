@@ -1,29 +1,35 @@
-.mode-picker p {
-  cursor: pointer;
-}
-
-.sub.category {
-  transition: height 0.5s;
-  height: 0;
+.upvote {
+  height: 3rem;
+  width: 5rem;
+  background-color: white;
   margin: 1rem;
-  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 
-  &.visible {
-    height: 10rem;
+  img {
+    transition: filter 0.2s;
+  }
+
+  p {
+    transition: color 0.2s;
+  }
+
+  &:hover {
+    background-color: #ff3333;
+
+    img {
+      filter: invert(100%);
+    }
+
+    p {
+      color: white;
+    }
   }
 }
 
-.show-sub {
-  transition: transform 0.2s;
-  height: 4rem;
-  width: 4rem;
-  border-radius: 2rem;
-  user-select: none;
-}
-
-.show-sub:hover {
+.mode-picker p {
   cursor: pointer;
-  transform: scale(1.2);
 }
 
 .category {

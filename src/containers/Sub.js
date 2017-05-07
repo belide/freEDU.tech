@@ -31,25 +31,6 @@ class Sub extends React.Component {
     let { state, location } = this.props;
     let { user, suggestions, search, routeInfo } = state;
 
-    let subCategories = mode === 'sub' ? (
-      <div style={{ ...row }}>
-        <div style={{ ...f1, ...row, flexWrap: 'wrap' }}>
-          {routeInfo.sub ? Object.keys(routeInfo.sub).map((category, i) => {
-            return (
-              <Link
-                key={i}
-                to={routeInfo.sub[category].route}
-                className={`sub category ${this.state.subsVisible ? 'visible' : ''}`}
-                style={{ ...xy, width: '20rem', backgroundImage: `url(${routeInfo.sub[category].image})` }}
-                >
-                <h1>{routeInfo.sub[category].name}</h1>
-              </Link>
-            );
-          }) : null}
-        </div>
-      </div>
-    ) : null;
-
     // let subButton = routeInfo.sub ? (
     //   <div style={{ ...xy, height: '8rem', width: '8rem' }}>
     //     <div
@@ -101,12 +82,40 @@ class Sub extends React.Component {
           </div>
           <div style={f1}></div>
         </div>
-        {subCategories}
+        {this.renderSubCategories(mode)}
         <div style={{ ...row, alignItems: 'flex-start', justifyContent: 'flex-end' }}>
           {this.renderInput(mode)}
           {this.renderButton(mode)}
         </div>
         {this.renderPosts(mode)}
+      </div>
+    );
+  }
+
+  renderSubCategories = mode => {
+    if (mode != 'sub') {
+      return null;
+    }
+
+    let { routeInfo } = this.props.state;
+
+    return (
+      <div style={{ ...row }}>
+        <div style={{ ...f1, ...row, flexWrap: 'wrap', justifyContent: 'center' }}>
+          {routeInfo.sub ? Object.keys(routeInfo.sub).map((category, i) => {
+            return (
+              <Link
+                key={i}
+                to={routeInfo.sub[category].route}
+                className="sub category"
+                style={{ ...xy, height: '15rem', width: '20rem', margin: '3rem', backgroundImage: `url(${routeInfo.sub[category].image})` }}
+                >
+                <h1>{routeInfo.sub[category].name}</h1>
+              </Link>
+            );
+          }) : null}
+          <div style={{ ...xy, height: '15rem', width: '20rem', margin: '3rem'}}></div>
+        </div>
       </div>
     );
   }
@@ -125,13 +134,21 @@ class Sub extends React.Component {
   }
 
   renderPosts = mode => {
+    if (mode === 'sub') {
+      return null;
+    }
+
     if (mode === 'posts') {
       return (
         <div style={{ alignSelf: 'center' }}>
           {Object.keys(this.state[mode]).map(key => {
             return (
               <div key={key} style={{ ...row, ...xy, justifyContent: 'flex-start' }}>
-                <div style={{ ...xy, ...row, height: '3rem', width: '5rem', backgroundColor: 'white', margin: '1rem' }}>
+                <div
+                  onClick={() => {}}
+                  className="upvote"
+                  style={{ ...xy, ...row }}
+                  >
                   <img
                     style={{ height: '14px', width: '14px', marginRight: '5px' }}
                     src={require('../assets/triangle.png')}
@@ -153,7 +170,11 @@ class Sub extends React.Component {
         {Object.keys(this.state[mode]).map(key => {
           return (
             <div key={key} style={{ ...row, alignItems: 'flex-end', justifyContent: 'flex-start' }}>
-              <div style={{ ...xy, ...row, height: '3rem', width: '5rem', backgroundColor: 'white', margin: '1rem' }}>
+              <div
+                onClick={() => {}}
+                className="upvote"
+                style={{ ...xy, ...row }}
+                >
                 <img
                   style={{ height: '14px', width: '14px', marginRight: '5px' }}
                   src={require('../assets/triangle.png')}
