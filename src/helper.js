@@ -144,25 +144,27 @@ let routes = {
       image: require('./assets/databases.png'),
       name: 'Databases',
       route: '/databases',
-      sql: {
-        image: require('./assets/sql.png'),
-        name: 'SQL',
-        route: '/sql'
-      },
-      nosql: {
-        image: require('./assets/nosql.png'),
-        name: 'NoSQL',
-        route: '/nosql',
-        sub: {
-          mongodb: {
-            image: require('./assets/mongodb.png'),
-            name: 'MongoDB',
-            route: '/nosql/mongodb'
-          },
-          dynamodb: {
-            image: require('./assets/dynamodb.png'),
-            name: 'DynamoDB',
-            route: '/nosql/dynamodb'
+      sub: {
+        sql: {
+          image: require('./assets/sql.png'),
+          name: 'SQL',
+          route: '/databases/sql'
+        },
+        nosql: {
+          image: require('./assets/nosql.png'),
+          name: 'NoSQL',
+          route: '/databases/nosql',
+          sub: {
+            mongodb: {
+              image: require('./assets/mongodb.png'),
+              name: 'MongoDB',
+              route: '/databases/nosql/mongodb'
+            },
+            dynamodb: {
+              image: require('./assets/dynamodb.png'),
+              name: 'DynamoDB',
+              route: '/databases/nosql/dynamodb'
+            }
           }
         }
       }

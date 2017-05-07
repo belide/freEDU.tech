@@ -17,7 +17,8 @@ class Sub extends React.PureComponent {
     details: '',
     inputVisible: false,
     posts: {},
-    qa: {}
+    qa: {},
+    answer: ''
   }
 
   componentDidMount() {
@@ -139,7 +140,7 @@ class Sub extends React.PureComponent {
     })
 
     this.root.child('qa').on('value', snap => {
-      this.setState({ qa: snap.val() || {} })
+      this.setState({ qa: snap.val() || {} });
     })
   }
 
@@ -174,34 +175,64 @@ class Sub extends React.PureComponent {
         </div>
       );
     }
-
     return (
       <div style={{ alignSelf: 'center' }}>
         {Object.keys(this.state[mode]).reverse().map(key => {
           return (
-            <div key={key} style={{ ...row, alignItems: 'flex-end', justifyContent: 'flex-start' }}>
-              <div
-                onClick={() => this.root.child(mode).update({ [key]: { ...this.state[mode][key], votes: this.state[mode][key].votes + 1 } })}
-                className="upvote"
-                style={{ ...xy, ...row }}
-                >
-                <img
-                  style={{ height: '14px', width: '14px', marginRight: '5px' }}
-                  src={require('../assets/triangle.png')}
-                />
-                <p style={font.r}>{this.state[mode][key].votes}</p>
-              </div>
-              <div style={{ maxWidth: '90vw' }}>
-                <Link to={`${this.props.location.pathname}/answer`}>
+            <div key={key}>
+              <div style={{ ...row, alignItems: 'center', justifyContent: 'flex-start' }}>
+                <div
+                  onClick={() => this.root.child(mode).update({ [key]: { ...this.state[mode][key], votes: this.state[mode][key].votes + 1 } })}
+                  className="upvote"
+                  style={{ ...xy, ...row }}
+                  >
+                  <img
+                    style={{ height: '14px', width: '14px', marginRight: '5px' }}
+                    src={require('../assets/triangle.png')}
+                  />
+                  <p style={font.r}>{this.state[mode][key].votes}</p>
+                </div>
+                <div
+                  style={{ maxWidth: '75vw', cursor: 'pointer' }}
+                  onClick={() => this.expandAnswers()}
+                  >
                   <p style={{ ...font.e, color: color.q }}>{this.state[mode][key].question}</p>
                   <p style={{ ...font.t, color: color.q }}>{this.state[mode][key].details || ''}</p>
-                </Link>
+                </div>
+              </div>
+              {Object.keys(this.state[mode][key].answers || {}).map((answerID, i) => {
+                return (
+                  <div key={i} style={{}}>
+                    <p style={{ ...font.r, marginLeft: '7rem' }}>&#8226; {this.state[mode][key].answers[answerID]}</p>
+                  </div>
+                );
+              })}
+              <textarea
+                style={{ ...font.e, minHeight: '3rem', padding: '0.2rem', width: '60vw', margin: '0.5rem 3rem', resize: 'vertical' }}
+                placeholder="Answer"
+                value={this.state.answer}
+                onChange={({ target }) => this.setState({ answer: target.value })}
+              />
+              <div
+                onClick={() => {
+                  if (this.state.answer.length > 0) {
+                    this.root.child(`${mode}/${key}/answers`).push(this.state.answer);
+                    this.setState({ answer: '' });
+                  }
+                }}
+                style={{ alignSelf: 'flex-end', backgroundColor: color.e, padding: '0.6rem 1.7rem', margin: '1rem', cursor: 'pointer', userSelect: 'none' }}
+                >
+                <p style={{ ...font.t, color: 'white' }}>Answer</p>
               </div>
             </div>
           );
         })}
       </div>
     );
+  }
+
+  expandAnswers = () => {
+
   }
 
   getImageFromPath = arr => {

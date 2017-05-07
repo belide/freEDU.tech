@@ -79,19 +79,19 @@ let databases = [
   },
   {
     name: 'SQL',
-    route: '/sql'
+    route: '/databases/sql'
   },
   {
     name: 'NoSQL',
-    route: '/nosql'
+    route: '/databases/nosql'
   },
   {
     name: 'MongoDB',
-    route: '/nosql/mongodb'
+    route: '/databases/nosql/mongodb'
   },
   {
     name: 'DynamoDB',
-    route: '/nosql/dynamodb'
+    route: '/databases/nosql/dynamodb'
   },
 ];
 
