@@ -168,23 +168,23 @@ class Header extends React.Component {
 
     return (
       <div style={{ ...row, backgroundColor: color.q, height: '4rem', borderBottom: `1px solid ${color.q}`, padding: '0 3rem' }}>
-        <Link to="/">
-          <div style={{ ...row, alignItems: 'center', flex: 2 }}>
+        <div style={{ ...row, alignItems: 'center', flex: 2 }}>
+          <Link to="/">
             <img
               src={require('../assets/lightLogo.png')}
               style={{ width: '8rem' }}
             />
-            <Autosuggest
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              getSuggestionValue={v => v.name}
-              getSuggestions={getSuggestions}
-              renderSuggestion={this.renderSuggestion}
-              inputProps={inputProps}
-            />
-          </div>
-        </Link>
+          </Link>
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            getSuggestionValue={v => v.name}
+            getSuggestions={getSuggestions}
+            renderSuggestion={this.renderSuggestion}
+            inputProps={inputProps}
+          />
+        </div>
         <div style={{ ...xy, flex: 1, alignItems: 'flex-end' }}>
           <p style={{ fontSize: '1.6rem', color: 'white' }}>{user ? user.name : 'login'}</p>
         </div>

@@ -4,7 +4,8 @@ const SET_STATE = 'SET_STATE';
 
 const defaultState = {
   suggestions: [],
-  search: ''
+  search: '',
+  routeInfo: {}
 };
 
 const setState = function(state) {

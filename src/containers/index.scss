@@ -1,4 +1,27 @@
-.home-category {
+.sub.category {
+  transition: height 0.5s;
+  height: 0;
+  margin: 1rem;
+
+  &.visible {
+    height: 10rem;
+  }
+}
+
+.show-sub {
+  transition: transform 0.2s;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 2rem;
+  user-select: none;
+}
+
+.show-sub:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.category {
   background-blend-mode: multiply;
   transition: background-color 0.3s;
 
@@ -8,7 +31,7 @@
   }
 }
 
-.home-category:hover {
+.category:hover {
   background-color: rgba(0, 0, 0, .7);
 
   h1 {

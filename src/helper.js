@@ -75,7 +75,7 @@ let routes = { // '/'
         }
       },
       backend: {
-        image: require('./assets/logo.png'),
+        image: require('./assets/backend.png'),
         name: 'Back End',
         route: '/web/backend',
         sub: {
