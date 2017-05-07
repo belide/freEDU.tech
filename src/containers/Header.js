@@ -193,12 +193,6 @@ class Header extends React.Component {
   }
 
   onChange = (event, { newValue, method }) => {
-    if (method === 'click') {
-      let item = categories.filter(obj => obj.name === newValue)[0]; // what is efficiency?
-      // console.log('ITEM', item)
-      window.location.replace(item.route)
-    }
-
     this.props.setState({
       search: newValue
     });
@@ -207,9 +201,9 @@ class Header extends React.Component {
   onBlur = () => this.props.setState({ search: '' })
 
   renderSuggestion = v => (
-    <div>
+    <Link to={v.route}>
       {v.name}
-    </div>
+    </Link>
   );
 
   onSuggestionsFetchRequested = ({ value }) => {
