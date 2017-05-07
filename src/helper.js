@@ -7,9 +7,9 @@ const color = {
 };
 
 const font = {
-  q: { fontSize: '1.6rem' },
-  w: { fontSize: '1.6rem' },
-  e: { fontSize: '1.6rem' },
+  q: { fontSize: '2.5rem' },
+  w: { fontSize: '2.2rem' },
+  e: { fontSize: '1.9rem' },
   r: { fontSize: '1.6rem' },
   t: { fontSize: '1.3rem' },
 }

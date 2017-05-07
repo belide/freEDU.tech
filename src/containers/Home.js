@@ -18,7 +18,7 @@ class Home extends React.Component {
             return (
               <Link
                 key={i}
-                to={routes[category].route}
+                to={`${routes[category].route}/posts`}
                 >
                 <div
                   className="category"

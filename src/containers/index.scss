@@ -2,6 +2,7 @@
   transition: height 0.5s;
   height: 0;
   margin: 1rem;
+  overflow: hidden;
 
   &.visible {
     height: 10rem;

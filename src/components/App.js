@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Home from '../containers/Home'
 import Sub from '../containers/Sub'
+import Ask from '../containers/Ask'
 import Lost from '../components/Lost'
 import { store } from '../state';
 import './index.css';
@@ -17,6 +18,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/404" component={Lost}></Route>
             <Route exact path="/" component={Home}></Route>
+            <Route path="*/ask" component={Ask}></Route>
             <Route path="/*" component={Sub}></Route>
           </Switch>
         </BrowserRouter>
