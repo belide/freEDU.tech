@@ -232,7 +232,7 @@ class Sub extends React.PureComponent {
                   }
                   if (this.state.answer.length > 0) {
                     if (filter.isSpam(this.state.answer)) {
-                      return console.log('troll detected!');
+                      return this.setState({ answer: 'TROLOLOLLING DETECTED!!!' });
                     }
                     this.root.child(`${mode}/${key}/answers`).push(this.state.answer);
                     this.setState({ answer: '', activeAnswerId: null });
