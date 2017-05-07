@@ -18,7 +18,8 @@ class Sub extends React.PureComponent {
     inputVisible: false,
     posts: {},
     qa: {},
-    answer: ''
+    answer: '',
+    activeAnswerId: null
   }
 
   componentDidMount() {
@@ -180,7 +181,7 @@ class Sub extends React.PureComponent {
         {Object.keys(this.state[mode]).reverse().map(key => {
           return (
             <div key={key}>
-              <div style={{ ...row, alignItems: 'center', justifyContent: 'flex-start' }}>
+              <div style={{ ...row, alignItems: 'center', justifyContent: 'flex-start', width: '60vw' }}>
                 <div
                   onClick={() => this.root.child(mode).update({ [key]: { ...this.state[mode][key], votes: this.state[mode][key].votes + 1 } })}
                   className="upvote"
@@ -207,17 +208,22 @@ class Sub extends React.PureComponent {
                   </div>
                 );
               })}
-              <textarea
-                style={{ ...font.e, minHeight: '3rem', padding: '0.2rem', width: '60vw', margin: '0.5rem 3rem', resize: 'vertical' }}
-                placeholder="Answer"
-                value={this.state.answer}
-                onChange={({ target }) => this.setState({ answer: target.value })}
-              />
+              {this.state.activeAnswerId === key ? (
+                <textarea
+                  style={{ ...font.e, minHeight: '3rem', padding: '0.2rem', width: '50vw', margin: '0.5rem 3rem', resize: 'vertical' }}
+                  placeholder="Answer"
+                  value={this.state.answer}
+                  onChange={({ target }) => this.setState({ answer: target.value })}
+                />
+              ) : null}
               <div
                 onClick={() => {
+                  if (!this.state.activeAnswerId) {
+                    return this.setState({ activeAnswerId: key });
+                  }
                   if (this.state.answer.length > 0) {
                     this.root.child(`${mode}/${key}/answers`).push(this.state.answer);
-                    this.setState({ answer: '' });
+                    this.setState({ answer: '', activeAnswerId: null });
                   }
                 }}
                 style={{ alignSelf: 'flex-end', backgroundColor: color.e, padding: '0.6rem 1.7rem', margin: '1rem', cursor: 'pointer', userSelect: 'none' }}
