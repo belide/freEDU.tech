@@ -1,4 +1,5 @@
 import React from 'react';
+import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { setState } from '../state';
@@ -10,22 +11,23 @@ class Sub extends React.Component {
   state = {
     subsVisible: false,
     mode: 'posts',
-    mainInput: '',
-    details: '',
     title: '',
     link: '',
     question: '',
-    details: ''
+    details: '',
+    inputVisible: false,
+    posts: {},
+    qa: {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let { location } = this.props;
     let path = location.pathname.split('/').filter(val => val != '');
     this.getImageFromPath(path);
   }
 
   render() {
-    let { mode, mainInput, details, title, question, link } = this.state;
+    let { mode, details, title, question, link } = this.state;
     let { state, location } = this.props;
     let { user, suggestions, search, routeInfo } = state;
 
@@ -100,11 +102,37 @@ class Sub extends React.Component {
           <div style={f1}></div>
         </div>
         {subCategories}
-        <div style={{ ...row, alignItems: 'flex-start' }}>
+        <div style={{ ...row, alignItems: 'flex-start', justifyContent: 'flex-end' }}>
           {this.renderInput(mode)}
           {this.renderButton(mode)}
         </div>
+        {this.renderPosts(mode)}
       </div>
+    );
+  }
+
+  connectToFirebase = routeInfo => {
+    let { mode } = this.state;
+    this.root = firebase.database().ref(routeInfo.route);
+
+    this.root.child('posts').on('value', snap => {
+      this.setState({ posts: snap.val() || {} })
+    })
+
+    this.root.child('qa').on('value', snap => {
+      this.setState({ qa: snap.val() || {} })
+    })
+  }
+
+  renderPosts = mode => {
+    return (
+      Object.keys(this.state[mode]).map(key => {
+        return (
+          <div key={key}>
+            <p>{this.state[mode][key][mode === 'posts' ? 'title' : 'question']}</p>
+          </div>
+        );
+      })
     );
   }
 
@@ -121,14 +149,16 @@ class Sub extends React.Component {
       }
     }
     this.props.setState({ routeInfo: location })
+    this.connectToFirebase(location);
   }
 
   renderInput = mode => {
-    if (mode === 'sub') {
+    let { title, question, link, details, inputVisible } = this.state;
+
+    if (mode === 'sub' || !inputVisible) {
       return null;
     }
 
-    let { title, question, link, details } = this.state;
 
     let detailsInput = mode === 'posts' ? (
       <input
@@ -166,18 +196,53 @@ class Sub extends React.Component {
 
     return (
       <div
-        onClick={this.post(mode)}
+        onClick={() => this.post(mode)}
         style={{ backgroundColor: color.e, padding: '1rem 2rem', margin: '1rem', cursor: 'pointer', userSelect: 'none' }}
         >
-        <p style={{ ...font.r, color: 'white' }}>{mode === 'posts' ? 'Post Link' : 'Ask Question'}</p>
+        <p style={{ ...font.r, color: 'white' }}>{this.state.inputVisible ? 'Submit' : (mode === 'posts' ? 'Post Link' : 'Ask Question')}</p>
       </div>
     );
   }
 
   post = mode => {
-    if (mode === 'posts') {
+    if (this.state.inputVisible) {
+      // if (snap.val() === null) {
+      //   console.log('updating')
+      //   root.update({
+      //     links: [],
+      //     questions: []
+      //   });
+      // }
+      let { details, title, question, link } = this.state;
 
+      let data;
+
+      if (mode === 'posts') {
+        data = {
+          title,
+          link,
+          votes: 0
+        };
+
+        this.setState({ title: '', link: '' });
+      } else {
+        data = {
+          question,
+          details,
+          votes: 0
+        };
+
+        this.setState({ question: '', details: '' });
+      }
+
+      if ((mode === 'posts' && title.length > 0 && link.length > 0) || (mode === 'qa' && question.length > 0)) {
+        this.root.child(mode).push(data);
+      }
+
+      return this.setState({ inputVisible: false });
     }
+
+    return this.setState({ inputVisible: true });
   }
 }
 
