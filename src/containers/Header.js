@@ -192,7 +192,13 @@ class Header extends React.Component {
     );
   }
 
-  onChange = (event, { newValue }) => {
+  onChange = (event, { newValue, method }) => {
+    if (method === 'click') {
+      let item = categories.filter(obj => obj.name === newValue)[0]; // what is efficiency?
+      // console.log('ITEM', item)
+      window.location.replace(item.route)
+    }
+
     this.props.setState({
       search: newValue
     });

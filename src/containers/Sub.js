@@ -22,13 +22,11 @@ class Sub extends React.PureComponent {
 
   componentDidMount() {
     let { location } = this.props;
-    let path = location.pathname.split('/').filter(val => val != '');
+    let path = location.pathname.split('/').filter(val => val != '' && val != 'answer');
     this.getImageFromPath(path);
   }
 
   render() {
-
-    console.log('render')
     let { mode, details, title, question, link } = this.state;
     let { state, location } = this.props;
     let { user, suggestions, search, routeInfo } = state;
@@ -96,7 +94,7 @@ class Sub extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (prevProps.location.pathname.length !== this.props.location.pathname.length) {
       console.log('back!')
-      this.getImageFromPath(this.props.location.pathname.split('/').filter(val => val != ''));
+      this.getImageFromPath(this.props.location.pathname.split('/').filter(val => val != '' && val != 'answer'));
     }
   }
 
@@ -117,7 +115,7 @@ class Sub extends React.PureComponent {
                 to={routeInfo.sub[category].route}
                 onClick={() => {
                   console.log('routeInfo.sub[category].route')
-                  this.getImageFromPath(routeInfo.sub[category].route.split('/').filter(val => val != ''));
+                  this.getImageFromPath(routeInfo.sub[category].route.split('/').filter(val => val != '' && val != 'answer'));
                 }}
                 className="sub category"
                 style={{ ...xy, height: '15rem', width: '20rem', margin: '3rem', backgroundImage: `url(${routeInfo.sub[category].image})` }}
@@ -194,8 +192,10 @@ class Sub extends React.PureComponent {
                 <p style={font.r}>{this.state[mode][key].votes}</p>
               </div>
               <div style={{ maxWidth: '90vw' }}>
-                <p style={{ ...font.e, color: color.q }}>{this.state[mode][key].question}</p>
-                <p style={{ ...font.t, color: color.q }}>{this.state[mode][key].details || ''}</p>
+                <Link to={`${this.props.location.pathname}/answer`}>
+                  <p style={{ ...font.e, color: color.q }}>{this.state[mode][key].question}</p>
+                  <p style={{ ...font.t, color: color.q }}>{this.state[mode][key].details || ''}</p>
+                </Link>
               </div>
             </div>
           );
