@@ -186,7 +186,11 @@ class Header extends React.Component {
           />
         </div>
         <div style={{ ...xy, flex: 1, alignItems: 'flex-end' }}>
-          <p style={{ fontSize: '1.6rem', color: 'white' }}>{user ? user.name : 'login'}</p>
+          {/* <p style={{ fontSize: '1.6rem', color: 'white' }}>{user ? user.name : 'login'}</p> */}
+          <img
+            src={require('../assets/profile.png')}
+            style={{ height: '2.8rem', width: '2.8rem', borderRadius: '3rem' }}
+          />
         </div>
       </div>
     );
